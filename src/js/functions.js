@@ -1,0 +1,93 @@
+
+/** 
+ * Checks if element has a certain class
+** @param {DOMElement} element - DOM element to check for a class
+** @param {string} className - class to be checked, e.g. 'active'
+*/
+var hasClass = function (element, className) {
+  if (document.documentElement.classList) {
+    hasClass = function (element, className) {
+      return element.classList.contains(className);
+    }
+  } else {
+    hasClass = function (element, className) {
+      if (!element || !element.className) {
+        return false;
+      }
+      var re = new RegExp('(^|\\s)' + className + '(\\s|$)');
+      return element.className.match(re);
+    }
+  }
+  return hasClass(element, className);
+}
+
+/** 
+ * Adds class to an element
+** @param {DOMElement} element - DOM element to add a class to
+** @param {string} className - only one class name, e.g. 'active'
+*/
+var addClass = function (element, className) {
+  if (document.documentElement.classList) {
+    addClass = function (element, className) {
+      element.classList.add(className);
+    }
+  } else {
+    addClass = function (element, className) {
+      if (!element) {
+        return false;
+      }
+      if (!hasClass(element, className)) {
+        element.className += (element.className ? " " : "") + className;
+      }
+    }
+  }
+  addClass(element, className);
+}
+
+/** 
+ * Removes an element's class
+** @param {DOMElement} element - DOM element to remove a class from
+** @param {string} className - only one class name, e.g. 'active'
+*/
+var removeClass = (element, className) => {
+  if (document.documentElement.classList) {
+    // New Browsers
+    removeClass = (element, className) => {
+      element.classList.remove(className);
+    }
+  } else {
+    // Fallback
+    removeClass = (element, className) => {
+      if (!element || !element.className) {
+        return false;
+      }
+      var regexp = new RegExp("(^|\\s)" + className + "(\\s|$)", "g");
+      element.className = element.className.replace(regexp, "$2");
+    }
+  }
+  removeClass(element, className);
+}
+
+/** 
+ * Toggles a class in an element
+** @param {DOMElement} element - DOM element to toggle a class from
+** @param {string} className - only one class name, e.g. 'active'
+*/
+var toggleClass = function (element, className) {
+  if (document.documentElement.classList) {
+    toggleClass = function (element, className) {
+      return element.classList.toggle(className);
+    }
+  } else {
+    toggleClass = function (element, className) {
+      if (hasClass(element, className)) {
+        removeClass(element, className);
+        return false;
+      } else {
+        addClass(element, className);
+        return true;
+      }
+    }
+  }
+  return toggleClass(element, className);
+}
