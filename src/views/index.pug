@@ -11,20 +11,7 @@ html
       - var darkBG = true;
 
       include sections/header.pug
-        
-      section#home-cover.cover
-        .row
-          article.cover-video
-            figure.cover-video--category
-              img(src="img/category--raio-x.svg", alt="Logotipo da série Raio-X do Mentores Online")
-            h2.cover-video--title Wendell Carvalho
-            p.cover-video--description Inspire-se com a visão de vida do especialista em mudança comportamental e estratégias para atingir metas. 
-
-          a(href="#open-video", title="Assista o vídeo de Wendell Carvalho no Raio-X do Mentores Online").play-button 
-            img(src="img/play-button.svg", alt="Ícone de Play")
-
-        .row
-          include sections/partners.pug
+      include sections/cover.pug
         
 
     include includes/scripts.pug
