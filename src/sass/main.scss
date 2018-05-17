@@ -1,8 +1,5 @@
-body {
-  background-color: black;
-  color: black;
-}
+// Set up
+@import 'vars';
+@import 'wipe';
+@import 'setup';
 
-.hello {
-  color: red;
-}
