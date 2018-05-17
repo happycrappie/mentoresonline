@@ -145,9 +145,13 @@ gulp.task('move', function () {
     srcRoot + '*.ico', 
     srcRoot + 'favicon/*', 
     '.htaccess',
-    src.assets + 'fonts/**/*',
   ])
     .pipe(gulp.dest(buildRoot))
+});
+
+gulp.task('fonts', function() {
+  return gulp.src(src.assets + 'fonts/**/*')
+    .pipe(gulp.dest(buildRoot + 'fonts/'))
 });
 
 // IMG Assets
@@ -195,7 +199,7 @@ gulp.task('clean', function () {
 /**
  * DEV TASK
  */
-gulp.task('dev', ['views', 'videos', 'sass', 'cssLibs', 'js', 'move', 'img', 'watch']);
+gulp.task('dev', ['views', 'videos', 'sass', 'cssLibs', 'js', 'move', 'fonts', 'img', 'watch']);
 
 
 
@@ -205,7 +209,7 @@ gulp.task('dev', ['views', 'videos', 'sass', 'cssLibs', 'js', 'move', 'img', 'wa
  * 
  */
 
-gulp.task('build', ['ship_critical', 'js', 'img', 'move']);
+gulp.task('build', ['ship_critical', 'js', 'img', 'move', 'fonts']);
 
 // View Task
 gulp.task('build_views', function () {
