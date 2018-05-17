@@ -1,9 +1,15 @@
 .nav {
+  display: flex;
+  align-items: center;
 
-  &.--white {}
-  &.--black {}
+  &.--white { color: white; }
+  &.--black { color: black; }
 
   .nav--link {
-  
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1;
+
+    margin-right: 3rem;
   }
 }
