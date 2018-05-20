@@ -1,0 +1,20 @@
+mixin videoCard(video)
+  article.featured-video
+    .featured-video--minicover(style="background-image: url(" + video.minicover + ");")
+    .featured-video--minipreview(style="background-image: url(" + video.minipreview + ");")
+
+    header.featured-video-header
+      figure.featured-video-header--category
+        img(src=video.category.img.white)
+      button.featured-video-header--watch
+        span
+        | Assistir
+    
+    section.featured-video-info
+      h3.featured-video-info--title #{video.title}
+      p.featured-video-info--extra
+        if video.year
+          span #{video.year}
+        if video.episode
+          span Episódio #{video.episode}
+      p.featured-video-info--description #{video.description}
