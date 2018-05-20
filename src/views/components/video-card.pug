@@ -1,20 +1,20 @@
 mixin videoCard(video)
-  article.featured-video
-    .featured-video--minicover(style="background-image: url(" + video.minicover + ");")
-    .featured-video--minipreview(style="background-image: url(" + video.minipreview + ");")
+  article.video-card
+    .video-card--bg.--minicover(style="background-image: url(" + video.minicover + ");")
+    .video-card--bg.--minipreview(style="background-image: url(" + video.minipreview + ");")
 
-    header.featured-video-header
-      figure.featured-video-header--category
+    header.video-card-header
+      figure.video-card-header--category
         img(src=video.category.img.white)
-      button.featured-video-header--watch
+      button.video-card-header--watch
         span
         | Assistir
     
-    section.featured-video-info
-      h3.featured-video-info--title #{video.title}
-      p.featured-video-info--extra
+    section.video-card-info
+      h3.video-card-info--title #{video.title}
+      p.video-card-info--extra
         if video.year
           span #{video.year}
         if video.episode
           span Episódio #{video.episode}
-      p.featured-video-info--description #{video.description}
+      p.video-card-info--description #{video.description}
