@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+html
+  include ../includes/vars.pug
+  block pageVars
+    - var pageVars;
+  include ../includes/head.pug
+  include ../includes/data.pug
+  include ../includes/components.pug
+
+  body
+    include ../sections/header.pug
+
+    block content
+
+    include ../sections/footer.pug  
+
+    block scripts
+      include ../includes/scripts.pug
+    
