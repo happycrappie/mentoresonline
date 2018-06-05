@@ -3,13 +3,17 @@ extends templates/default.pug
 block pageVars
   -
     var page = {
-      name: "Home"
+      name: "Home",
+      meta: "home"
     }
   - var darkBG = true;
 
 block content
   main#home.page
-    include sections/cover.pug
+    //- Video Card component referenced from: /views/components/video-card.pug
+    //- featured is the object from: /_data/featured.pug
+    +cover(featured.cover, page.meta)
+    
     section#homeContent.home-content
       include sections/featured-videos.pug
       include sections/quote.pug
