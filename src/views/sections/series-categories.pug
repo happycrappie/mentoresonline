@@ -7,7 +7,7 @@ section#seriesCategories.series-categories
 
   section.series-categories--covers
     //- Loop through all Categories.
-    //- categoriesList is the array from the Categories object.
-    each category in categoriesList
+    //- categoriesArray is the array from the Categories object: /views/_data/categories.pug
+    each category in categoriesArray
       //- Serie Cover component referenced from: /views/components/serie-cover.pug
       +serie-cover(category)
