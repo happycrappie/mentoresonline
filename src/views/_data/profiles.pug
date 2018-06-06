@@ -1,47 +1,50 @@
-//- PROFILE DATABASE
-//- Type: Mother
+//-----------------------------------------
+//-    PROFILE DATABASE
+//-    Type: Mother
 //-
-//- This database will hold the profiles of each person recorded by the Mentores Online team, with useful information about the person, like a nice profile pic and social media links.
+//-    This database will hold the profiles of each person recorded by the Mentores Online team, with useful information about the person, like a nice profile pic and social media links.
+//-
+//-    PROFILES OBJECT: [PROFILE Object]
+//-
+//-----------------------------------------
+//-
+//-    PROFILE OBJECT:
+//-    * Meta: Key ID
+//-    * Name: Name of the person
+//-    * Job: The job title of that person, or how he/she identifies him/herself.
+//-    * Quote: A quote they like, or a mere description of who they are.
+//-    * Links: [Array] 
+//-      |-- [Object]:
+//-      |   - Type: REF. specific [LINKS] Object.
+//-      |   - Handle: The link/social handle.
+//-    * Images: [Object]
+//-       |-- Profile: The profile picture
+//-
+//-----------------------------------------
 
 -
   var profiles = {
     "wendellcarvalho": {
       "meta": "wendellcarvalho",
       "name": "Wendell Carvalho",
-      "title": "Palestrante e Escritor",
-      "description": "Tudo começou quando eu...",
-      "socials": [
+      "job": "Palestrante e Escritor",
+      "quote": "Tudo começou quando eu...",
+      "links": [
         {
-          "name": "facebook",
-          "handle": "wendellcarvalho",
+          type: links.facebook,
+          handle: "wendellcarvalho",
         },
         {
-          "name": "instagram",
-          "handle": "wendellcarvalho",
+          type: links.instagram,
+          handle: "wendellcarvalho",
+        },
+        {
+          type: links.website,
+          handle: "wendellcarvalho",
         },
       ],
-      "picture": "wendell-carvalho",
-    },
-    "rosanabraga": {
-      "meta": "rosanabraga",
-      "name": "Rosana Braga",
-      "title": "Palestrante e Escritor",
-      "description": "Tudo começou quando eu...",
-      "socials": {
-        "facebook": "rosanabraga",
-        "instagram": "rosanabraga",
+      "images": {
+        "profile": "wendell-carvalho",
       },
-      "picture": "rosana-braga",
     },
-    "rodrigocardoso": {
-      "meta": "rodrigocardoso",
-      "name": "Rodrigo Cardoso",
-      "title": "Palestrante e Escritor",
-      "description": "Tudo começou quando eu...",
-      "socials": {
-        "facebook": "rodrigocardoso",
-        "instagram": "rodrigocardoso",
-      },
-      "picture": "rodrigo-cardoso",
-    },
-  };
+  }
