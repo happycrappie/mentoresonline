@@ -2,6 +2,7 @@ if partners
   section#partners.partners
     h3.partners--title Quem nos ajuda a inspirar pessoas
     ul.partners--logos
+      //- [PARTNERS] Object referenced from: /views/_data/partners.pug
       each partner in partners
         li.partner--logo
-          img(src=partner.img, alt="Logo tipo do parceiro: " + partner.name)
+          img(src="/img/partners/partner-logo--" + partner.logo + ".svg", alt="Logo tipo do parceiro: " + partner.name)

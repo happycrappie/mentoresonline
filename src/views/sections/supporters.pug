@@ -2,7 +2,8 @@ if supporters
   section#supporters.supporters
     h3.supporters--title Apoiadores do projeto
     ul.supporters--logos
+      //- [SUPPORTERS] Object referenced from: /views/_data/supporters.pug
       each supporter in supporters
         li.supporter--logo
-          a(href=supporter.url ? supporter.url : "", title="Acesse o site do apoiador: " + supporter.name, rel='noopener noreferrer') 
-            img(src=supporter.img, alt="Logo tipo do apoiador: " + supporter.name)
+          a(href=supporter.url ? supporter.url : "#", title="Acesse o site do apoiador: " + supporter.name, rel='noopener noreferrer') 
+            img(src="/img/supporters/supporter-logo--" + supporter.logo + ".svg", alt="Logo tipo do apoiador: " + supporter.name)
