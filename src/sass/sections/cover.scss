@@ -49,21 +49,16 @@
   }
 
   &--title {
-    font-family: $font-family--title;
-    font-size: 5.5rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    line-height: .9;
+    @extend %title;
+    @extend %--big;
+    @extend %--light;
 
     margin-bottom: 1.2rem;
-
-    color: white;
   }
 
   &--description {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: white;
-    opacity: .8;
+    @extend %description;
+    @extend %--normal;
+    @extend %--light;
   }
 }
