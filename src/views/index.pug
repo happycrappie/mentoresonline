@@ -12,7 +12,7 @@ block content
   main#home.page
     //- Video Card component referenced from: /views/components/video-card.pug
     //- featured is the object from: /_data/featured.pug
-    +cover(featured.cover, page.meta)
+    +cover(featured.cover, page.meta, true)
     
     section#homeContent.home-content
       include sections/featured-videos.pug
