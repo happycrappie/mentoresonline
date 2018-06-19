@@ -1,4 +1,6 @@
 header#header.header
-  +logo(darkBG ? siteLogo.white : siteLogo.black, "/")
+  +logo(darkBG ? siteLogo.white : siteLogo.black, "/", "Mentores Online", darkBG ? "white" : "black")
+  if darkBG
+    +logo(siteLogo.black, "/", "Mentores Online", "black")
 
   include ../components/nav.pug
