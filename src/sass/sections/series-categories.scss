@@ -25,5 +25,16 @@
 
   &--covers {
     display: flex;
+    flex-wrap: wrap;
+    
+    .serie-cover {
+      width: calc(25% - 2rem);
+      min-height: 430px;
+
+      @media screen and (max-width: 1024px) {
+        width: calc(50% - 2rem);
+        min-height: 240px;
+      }
+    }
   }
 }
