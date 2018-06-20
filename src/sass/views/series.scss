@@ -106,3 +106,10 @@
     }
   }
 }
+
+.series-page {
+  .nav .nav--link:nth-child(2) {
+    color: $color--red;
+    border-bottom-color: rgba($color--red, .4);
+  }
+}

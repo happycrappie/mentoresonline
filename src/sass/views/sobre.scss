@@ -177,3 +177,10 @@
     }
   }
 }
+
+.sobre-page {
+  .nav .nav--link:nth-child(3) {
+    color: $color--red;
+    border-bottom-color: rgba($color--red, .4);
+  }
+}
