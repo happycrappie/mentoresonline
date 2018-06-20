@@ -20,6 +20,13 @@
   &%--medium { font-size: 1.8rem; }
   &%--normal { font-size: 1.4rem; }
   &%--small { font-size: 1rem; }
+  
+  @media screen and (max-width: 767px) {
+    &%--big { font-size: 2rem; }
+    &%--medium { font-size: 1.4rem; }
+    &%--normal { font-size: 1.2rem; }
+    &%--small { font-size: .9rem; }
+  }
 
   /* 
    *  COLORS 
