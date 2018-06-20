@@ -15,3 +15,15 @@ const fixNav = () => {
 domReady(function(e) {
   window.addEventListener('scroll', fixNav);
 });
+
+const openNavButton = document.getElementById('openNav');
+
+const toggleMobileNav = () => {
+  if ( hasClass(header, 'active') ) {
+    removeClass(header, 'active');
+  } else {
+    addClass(header, 'active');
+  }
+}
+
+openNavButton.addEventListener('click', toggleMobileNav);
