@@ -28,7 +28,7 @@ form {
       
       font-family: $font-family--text;
       font-size: .9rem;
-      line-height: 1;
+      line-height: 1.2;
 
       padding: 10px 22px;
 
@@ -37,6 +37,11 @@ form {
       color: white;
 
       transition: all 260ms ease;
+
+      &:placeholder {
+        font-size: .9rem;
+        line-height: 1;
+      }
       
       &:hover {
         border-color: rgba(white, .8);
