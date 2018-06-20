@@ -13,8 +13,17 @@
   background-position: top right;
   background-repeat: no-repeat;
   
+  @media screen and (max-width: 1024px) {
+    background-size: 50%;
+    background-position: 120% 30%;
+  }
+  
   .quote-message {
     width: 60%;
+
+    @media screen and (max-width: 768px) {
+      width: 80%;
+    }
 
     &--text {
       display: block;
