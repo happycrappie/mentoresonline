@@ -13,7 +13,7 @@
 %title {
   font-family: $font-family--title;
   font-weight: 800;
-  line-height: .9;
+  line-height: 1;
   text-transform: uppercase;
 
   /*
@@ -26,11 +26,16 @@
   &%--x-small { font-size: .9rem; }
   
   @media screen and (max-width: 767px) {
-    &%--big { font-size: 3.6rem; }
-    &%--medium { font-size: 3rem; }
+    &%--big { font-size: 3rem; }
+    &%--medium { font-size: 2.4rem; }
     &%--normal { font-size: 1.4rem; }
     &%--small { font-size: 1.2rem; }
     &%--x-small { font-size: .8rem; }
+  }
+
+  @media screen and (max-width: 375px) {
+    &%--big { font-size: 2.6rem; }
+    &%--medium { font-size: 2rem; }
   }
 
   /* 
