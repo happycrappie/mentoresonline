@@ -10,6 +10,10 @@
     transform: scale(1.2);
   }
 
+  @media screen and (max-width: 768px) {
+    transform: scale(1.05);
+  }
+
   &:before,
   &:after {
     content: '';
@@ -68,6 +72,11 @@
     & > *:not(.serie-cover--logo) {
       visibility: hidden;
       opacity: 0;
+
+      @media screen and (max-width: 768px) {
+        visibility: visible;
+        opacity: 1;
+      }
     }
 
     .serie-cover--logo {
@@ -79,7 +88,13 @@
       left: 0;
       
       margin: auto;
+      
+      @media screen and (max-width: 768px) {
+        position: relative;
+        margin-bottom: 1rem;
+      }
     }
+
 
     &:hover {
       background: rgba(0,0,0,.40);
@@ -105,13 +120,17 @@
     width: 180px;
 
     margin-bottom: 1rem;
+
+    @media screen and (max-width: 768px) {
+      width: 120px;
+    }
   }
 
   &--description {
     @extend %description;
     @extend %--x-small;
     @extend %--light;
-
+    
     line-height: 1.6;
     text-align: center;
     
