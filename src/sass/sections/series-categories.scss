@@ -35,6 +35,10 @@
         width: calc(50% - 2rem);
         min-height: 240px;
       }
+      @media screen and (max-width: 767px) {
+        width: calc(100% - 2rem);
+        min-height: 320px;
+      }
     }
   }
 }
