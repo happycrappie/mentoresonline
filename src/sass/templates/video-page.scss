@@ -5,9 +5,9 @@
   }
 
   .video-content {
-    padding: 4rem 2rem 8rem;
-    padding-right: calc((100vw - 1300px) / 2);
-    padding-left: calc((100vw - 1300px) / 2);
+    @extend %padding;
+    padding-top: 4rem;
+    padding-bottom: 8rem;
 
     &--title {
       font-family: $font-family--title;
@@ -21,15 +21,36 @@
 
   .video-contents {
     display: flex;
+    
+    @media screen and (max-width: 1024px) {
+      flex-wrap: wrap;
+    }
   }
-
+  
   .video-transcription {
     width: 100%;
     max-width: 70%;
-
+    
+    @media screen and (max-width: 1024px) {
+      max-width: 100%;
+    }
+    
+    .row {
+      @media screen and (max-width: 767px) {
+        flex-wrap: wrap;
+      }  
+    }
+    
     .col {
       &:nth-of-type(odd) { padding-right: 15px; }
       &:nth-of-type(even) { padding-left: 15px; }
+      
+      @media screen and (max-width: 767px) {
+        &:nth-of-type(odd),
+        &:nth-of-type(even) {
+          padding: 0;
+        }
+      }  
     }
 
     &--title {
@@ -87,13 +108,27 @@
     padding-top: 2rem;
     padding-left: 3rem;
 
+    @media screen and (max-width: 1024px) {
+      max-width: 100%;
+
+      align-items: center;
+
+      padding: 0;
+    }
+
     &-profile {
       position: relative;
+
+      max-width: 460px;
 
       margin: 1.4rem 0;
       padding: 3.6rem 1rem 1rem;
       
       background-color: #ededed;
+
+      @media screen and (max-width: 1024px) {
+        margin: 7rem 0 1rem;
+      }
 
       &--pic {
         position: absolute;
