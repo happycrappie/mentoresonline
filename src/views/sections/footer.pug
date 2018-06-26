@@ -2,15 +2,25 @@ footer#footer.footer
   section.footer-newsletter
     h2.footer-newsletter--title Fique por dentro dos nossos lançamentos
 
-    form.footer-newsletter--form
-      .input--group
+    form#form.footer-newsletter--form(
+      action="http://mentoresonline.us18.list-manage.com/subscribe/post-json?u=8ad270f987210af8475830e48&id=543059c049&c=callback", method="post", name="mc-embedded-subscribe-form", target="_blank", no-validate="true")
+
+      //- Honeypot
+      div(style="position: absolute; left: -5000px;", aria-hidden="true")
+        input#this-is-a-name(type="text", name="b_8ad270f987210af8475830e48_543059c049", tabindex="-1", value="")
+
+      #js-form-inputs.input--group(style="color: white;")
         .input--container
-          input#name.input--field(name="name", type="text", placeholder="Insira seu nome")
-          label.input--label(for="name") Nome:
+          label.input--label(for="mce-FNAME") Nome:
+          input#mce-FNAME.input--field(name="FNAME", type="text", placeholder="Insira seu nome", required)
+          .error-message
         .input--container
-          input#email.input--field(name="email", type="email", placeholder="Insira seu e-mail")
-          label.input--label(for="email") E-mail:
+          label.input--label(for="mce-EMAIL") E-mail:
+          input#mce-EMAIL.input--field(name="EMAIL", type="email", placeholder="Insira seu e-mail", required)
+          .error-message
         input#submit.input--submit(type="submit", value="Inscreva-se")
+
+      #js-subscribe-response.form-confirmation-message
 
   section.footer-bottom
     .footer-bottom--copyright
@@ -20,3 +30,5 @@ footer#footer.footer
     .footer-bottom--social
       each social in siteSocials
         +socialShare(social)
+
+include ../includes/footer.pug
