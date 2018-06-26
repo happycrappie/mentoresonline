@@ -128,3 +128,46 @@ var hasStorage = (function () {
 
   exports.domReady = domReady;
 })(window, document);
+
+/** 
+ * Add one or more listeners to an element
+ * @param {DOMElement} element - DOM element to add listeners to
+ * @param {string} eventNames - space separated list of event names, e.g. 'click keyup touchmove'
+ * @param {Function} fn - function to attach for each event as a listener
+*/
+var addMultipleEventListeners = (element, eventNames, fn) => {
+  eventNames.split(' ').forEach(e => element.addEventListener(e, fn, false));
+}
+
+/** 
+ * Shows error message
+ * @param {DOMElement} element - DOM element to show as error
+ * @param {string} message - the error message to be shown
+*/
+var showErrorMessage = (element, message = false) => {
+  // console.log(element);
+  if (message) {
+    element.innerHTML = message;
+    // console.log(element.innetHTML);
+  }
+  addClass(element, 'active');
+  // console.log(element.classList.contains('active'));
+
+  setTimeout(() => {
+    removeClass(element, 'active');
+  }, 6000);
+}
+
+/**
+ * Shows valid message
+ * @param {DOMElement} element - DOM element to show as error 
+ * @param {string} message - the message to be shown when input is valid 
+ */
+var showValidMessage = (element, message) => {
+  element.innerHTML = message;
+  addClass(element, 'active');
+
+  setTimeout(() => {
+    removeClass(element, 'active');
+  }, 4000);
+}
