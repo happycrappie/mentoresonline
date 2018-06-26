@@ -7,12 +7,36 @@ form {
     }
 
     &--container {
+      position: relative;
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: column;
 
       width: 100%;
 
       padding: 10px;
+
+      .error-message {
+        font-size: .85rem;
+        font-weight: 500;
+
+        padding-left: 25px;
+        padding-top: 5px;
+        
+        color: yellow;
+
+        visibility: hidden;
+        opacity: 0;
+        
+        @media screen and (min-width: 500px) {
+          position: absolute;
+          bottom: -20px;
+        }
+
+        &.active {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
     }
 
     &--label {
@@ -62,6 +86,29 @@ form {
 
       @extend .button;
       @extend .--red;
+    }
+  }
+
+  .form-confirmation-message {
+    margin: 1rem;
+    padding: 1rem;
+
+    font-size: .85rem;
+    font-weight: 500;
+
+    background-color: rgba(white,.2);
+    color: white;
+
+    transition: all 260ms ease;
+
+    &:empty { 
+      visibility: hidden; 
+      opacity: 0;
+    }
+
+    @media screen and (min-width: 500px) {
+      max-width: 80%;
+      margin: 1rem auto;
     }
   }
 }
