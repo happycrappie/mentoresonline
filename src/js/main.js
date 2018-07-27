@@ -124,3 +124,21 @@ if (document.querySelector('#video.page')) {
     pauseVideo();
   });
 }
+
+/**
+ * Has Video Card Component
+ * 
+ * If the page has a Video Card component, run the code accordingly.
+ */
+if (document.querySelector('.video-card')) {
+  var videoDescriptions = document.querySelectorAll('.video-card-info--description');
+  var videoDescriptionsArray = [].slice.call(this.videoDescriptions);
+  
+  domReady(function(e) {
+    videoDescriptionsArray.forEach(function (video, index) {
+      console.log(video, video.innerHTML);
+      video.innerHTML = truncateText(video, 140);
+      // console.log(video,video.innerText);
+    });
+  });
+}
