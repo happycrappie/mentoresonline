@@ -123,6 +123,18 @@ if (document.querySelector('#video.page')) {
 
     pauseVideo();
   });
+
+  /**
+   * If is coming from Home Page, launch video automatically.
+   */
+
+  domReady(function(e){    
+    if (document.referrer.substring(0, document.referrer.length - 1) === window.location.origin) {
+      openVideo.click();
+    } else {
+      // do nothing
+    }
+  })
 }
 
 /**

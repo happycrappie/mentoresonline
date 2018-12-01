@@ -173,7 +173,7 @@ var showValidMessage = (element, message) => {
 }
 
 /**
- * 
+ * Truncate Text
  * @param {DOMElement} element – DOM element to truncate text
  * @param {number} maxLength  – Maximum length of the text
  */
