@@ -41,7 +41,8 @@
     "map-stream": "0.0.7",
     "path": "^0.12.7",
     "pump": "^3.0.0",
-    "vinyl-fs": "^3.0.2"
+    "vinyl-fs": "^3.0.2",
+    "lodash": ">=4.17.11"
   },
   "dependencies": {}
 }
