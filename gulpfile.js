@@ -1,325 +1,231 @@
-'use strict';
+/*****************
+ * Gulp Requires
+ *****************/
+  const { src, dest, watch, series, parallel } = require('gulp'),
+        pug = require('gulp-pug'),
+        sass = require('gulp-sass'),
+        gulpif = require('gulp-if'),
+        bs = require('browser-sync'),
+        babel = require('gulp-babel'),
+        clean = require('gulp-clean'),
+        // concat = require('gulp-concat'),
+        plumber = require('gulp-plumber'),
+        imagemin = require('gulp-imagemin'),
+        // cleanCSS = require('gulp-clean-css'),
+        prefix = require('gulp-autoprefixer');
+        // concatCSS = require('gulp-concat-css');
 
-// Requires
-var gulp = require('gulp'),
-    pump = require('pump'),
-    pug = require('gulp-pug'),
-    map = require('map-stream'),
-    sass = require('gulp-sass'),
-    bs = require('browser-sync'),
-    clean = require('gulp-clean'),
-    match = require('gulp-match'),
-    vinylfs = require('vinyl-fs'),
-    concat = require('gulp-concat'),
-    rename = require('gulp-rename'),
-    plumber = require('gulp-plumber'),
-    imagemin = require('gulp-imagemin'),
-    cleanCSS = require('gulp-clean-css'),
-    prefix = require('gulp-autoprefixer'),
-    concatCSS = require('gulp-concat-css'),
-    uglify = require('gulp-uglify-es').default;
+  const critical = require('critical').stream;
+  const reload = bs.reload;
 
-// Critical
-var critical = require('critical').stream;
+/*****************
+ * Paths
+ *****************/
 
-// BrowserSync Reload
-var reload = bs.reload;
+  // Main Paths
+  const srcRoot = './src/',
+        buildRoot = './public/';
 
-// My Paths
-var srcRoot = './src/',
-  buildRoot = './public/';
+  // Source Files
+  const srcPaths = {
+    js: srcRoot + 'js/',
+    css: srcRoot + 'sass/',
+    mail: srcRoot + 'mail/',
+    views: srcRoot + 'views/',
+    img: srcRoot + 'assets/img/',
+    pages: srcRoot + 'views/pages/',
+    videos: srcRoot + 'views/videos/',
+    assets: srcRoot + 'assets/',
+  }
+  // Build Files
+  const buildPaths = {
+    js: buildRoot + 'js/',
+    css: buildRoot + 'css/',
+    img: buildRoot + 'img/',
+    mail: buildRoot + 'mail/',
+    fonts: buildRoot + 'fonts/',
+    videos: {
+      raiox: buildRoot + 'raio-x/',
+      linha: buildRoot + 'linha-do-tempo/',
+      estudo: buildRoot + 'estudo-de-caso/',
+      fronteiras: buildRoot + 'sem-fronteiras/',
+    },
+    assets: buildRoot + '_assets/',
+  }
 
-// Dev Files
-var src = {
-  js: srcRoot + 'js/',
-  css: srcRoot + 'sass/',
-  mail: srcRoot + 'mail/',
-  views: srcRoot + 'views/',
-  videos: srcRoot + 'views/videos/',
-  assets: srcRoot + 'assets/',
-};
+var env = process.env.NODE_ENV;
 
-// Build Files
-var build = {
-  js: buildRoot + 'js/',
-  css: buildRoot + 'css/',
-  img: buildRoot + 'img/',
-  mail: buildRoot + 'mail/',
-  videos: {
-    raiox: buildRoot + 'raio-x/',
-    linha: buildRoot + 'linha-do-tempo/',
-    estudo: buildRoot + 'estudo-de-caso/',
-    fronteiras: buildRoot + 'sem-fronteiras/',
-  },
-  assets: buildRoot + '_assets/',
-};
+/*****************
+ * Views
+ *****************/
+  function views() {
 
+    return src([
+        srcPaths.views + '*.pug',
+        srcPaths.pages + '**/*.pug',
+        srcPaths.videos + '**/*.pug'
+      ])
+      .pipe(gulpif(env === 'production', pug({
+        pretty: false
+      }), pug({
+        pretty: true
+      })))
+      .pipe(plumber())
+      .pipe(dest(buildRoot));
+  }
 
-/**
- * VIEW TASKS
- */
+/*****************
+ * Styles
+ *****************/
+  function styles() {
 
-// View Task
-gulp.task('views', function () {
-  return gulp.src([
-    src.views + '*.pug', 
-    src.views + 'pages/**/*.pug'
-    ])
-    .pipe(plumber())
-    .pipe(pug({
-      pretty: true
-    }))
-    .pipe(gulp.dest(buildRoot))
-});
+    // Main Styles
+    return src(srcPaths.css + 'main.scss')
+      .pipe(plumber())
+      .pipe(gulpif(env === 'production', sass.sync({
+        outputStyle: 'compressed',
+        precision: 10,
+        includePaths: ['.'],
+      }), sass.sync({
+        outputStyle: 'nested',
+        precision: 10,
+        includePaths: ['.'],
+      })))
+      .pipe(gulpif(env === 'production', prefix({
+        browsers: [
+          'last 4 versions',
+          'android 4',
+          'opera 12',
+        ]
+      }), prefix({
+        browsers: [
+          'last 2 versions',
+          'android 4',
+          'opera 12',
+        ]
+      })))
+      .pipe(dest(buildPaths.css));
+  }
 
-// Videos Tasks
-gulp.task('videos', function() {
-  return gulp.src(src.videos + '**/*.pug')
-    .pipe(plumber())
-    .pipe(pug({
-      pretty: true
-    }))
-    .pipe(gulp.dest(buildRoot));
-});
-
-
-/**
- * SASS TASKS
- */
-
-// Sass Task
-gulp.task('sass', function () {
-  return gulp.src(src.css + 'main.scss')
-    .pipe(plumber())
-    .pipe(sass.sync({
-      outputStyle: 'nested',
-      precision: 10,
-      includePaths: ['.'],
-    }))
-    .pipe(prefix({ 
-      browsers: [
-        'last 2 versions',
-        'android 4',
-        'opera 12',
-      ] 
-    }))
-    .pipe(gulp.dest(build.css))
-    .pipe(reload({
-      stream: true
-    }));
-});
-
-// CSS Libs
-gulp.task('cssLibs', function () {
-  return gulp.src([src.css + 'libs/*.css', src.css + 'libs/*.scss'])
-    .pipe(plumber())
-    .pipe(cleanCSS())
-    .pipe(concatCSS('assets.css'))
-    .pipe(gulp.dest(build.css))
-    .pipe(reload({
-      stream: true
-    }));
-});
-
-
-/**
- * WATCHER TASKS
- */
-
-// JS Task
-gulp.task('js', function (cb) {
-  pump([
-    gulp.src(src.js + '*.js'),
-    uglify(),
-    gulp.dest(build.js)
-  ],
-    cb
-  );
-});
-
-
-/**
- * ASSETS
- */
-
-// Move files
-gulp.task('move', function () {
-  return gulp.src([
-    srcRoot + '*.ico', 
-    src.assets + 'favicon/*', 
-    srcRoot + '.htaccess',
-  ])
-    .pipe(gulp.dest(buildRoot))
-});
-
-gulp.task('fonts', function() {
-  return gulp.src(src.assets + 'fonts/**/*')
-    .pipe(gulp.dest(buildRoot + 'fonts/'))
-});
-
-// IMG Assets
-gulp.task('img', function () {
-  return gulp.src(src.assets + 'img/**/**/*')
-    .pipe(imagemin([
-      imagemin.gifsicle({ interlaced: true }),
-      imagemin.jpegtran({ progressive: true }),
-      imagemin.optipng({ optimizationLevel: 0 }),
-      imagemin.svgo({ plugins: [{ removeViewBox: true }] })
-    ]))
-    .pipe(gulp.dest(build.img))
-    .pipe(reload({ stream: true }));
-});
-
-/**
- * WATCHER TASKS
- */
-
-// Watch views
-gulp.task('watch_views', ['views', 'videos'], reload);
-
-// Watch all files
-gulp.task('watch', function() {
-  bs({
-    server: buildRoot,
-    files: [srcRoot + '**/**/**/**/*', buildRoot + '**/**/**/**/*'],
-  });
-
-  gulp.watch(srcRoot + '**/**/**/*.pug', ['watch_views']);
-  gulp.watch(src.css + '**/**/*.scss', ['sass']);
-  gulp.watch(src.js + '**/**/*.js', ['js']);
-  gulp.watch(src.css + 'libs/**/*.css', ['cssLibs']);
-  gulp.watch(src.js + 'lib/**/*.js', ['jsLib']);
-  gulp.watch(src.assets + 'img/**/**', ['img']);
-});
-
-// Clean Build Folder
-gulp.task('clean', function () {
-  return gulp.src(buildRoot)
-    .pipe(clean());
-});
-
-
-/**
- * DEV TASK
- */
-gulp.task('dev', ['views', 'videos', 'sass', 'cssLibs', 'js', 'move', 'fonts', 'img', 'watch']);
-
-
-
-/**
- * 
- * BUILD TASKS
- * 
- */
-
-gulp.task('build', ['ship_critical', 'js', 'img', 'move', 'fonts']);
-
-// View Task
-gulp.task('build_views', function () {
-  return gulp.src([
-      src.views + '*.pug',
-      src.views + 'pages/**/*.pug',
-    ])
-    .pipe(plumber())
-    .pipe(pug({
-      doctype: 'html',
-      pretty: false
-    }))
-    .pipe(gulp.dest(buildRoot))
-});
-
-// Videos Tasks
-gulp.task('build_videos', function () {
-  return gulp.src(src.videos + '**/*.pug')
-    .pipe(plumber())
-    .pipe(pug({
-      doctype: 'html',
-      pretty: false
-    }))
-    .pipe(gulp.dest(buildRoot));
-});
-
-// Sass Task
-gulp.task('build_sass', function () {
-  return gulp.src(src.css + 'main.scss')
-    .pipe(plumber())
-    .pipe(sass.sync({
-      outputStyle: 'compressed',
-      precision: 10,
-      includePaths: ['.'],
-    }))
-    .pipe(prefix({
-      browsers: [
-        'last 4 versions',
-        'android 4',
-        'opera 12',
-      ]
-    }))
-    .pipe(gulp.dest(build.css));
-});
-
-// CSS Libs
-gulp.task('build_libs', function () {
-  return gulp.src([src.css + 'libs/*.css', src.css + 'libs/*.scss'])
-    .pipe(plumber())
-    .pipe(cleanCSS())
-    .pipe(concatCSS('assets.css'))
-    .pipe(gulp.dest(build.css));
-});
-
-// IMG Assets
-gulp.task('build_img', function () {
-  return gulp.src(src.assets + 'img/**/**/*')
-    .pipe(imagemin([
-      imagemin.gifsicle({
-        interlaced: true,
-        optimizationLevel: 3
-      }),
-      imagemin.jpegtran({
-        progressive: true
-      }),
-      imagemin.optipng({ optimizationLevel: 3 }),
-      imagemin.svgo({
-        plugins: [{
-          removeViewBox: true,
-          removeComments: true,
-          removeMetadata: true,
-          removeTitle: true,
-          removeDesc: true,
-          cleanupAttrs: true
-        }]
-      })], {
-        verbose: true
+/*****************
+ * Scripts
+ *****************/
+  function scripts(cb) {
+    src(srcPaths.js + '*.js')
+      .pipe(babel({
+        presets: ['@babel/env']
       }))
-    .pipe(gulp.dest(build.img));
-});
+      .pipe(dest(buildPaths.js));
 
-/**
- * 
- * CRITICAL CSS
- * 
- */
+    cb();
+  }
 
-// Generate & Inline Critical-path CSS
-gulp.task('views_critical', ['build_views', 'build_sass'], function () {
-  return gulp.src(buildRoot + '*.html')
-    .pipe(critical({
-      base: 'public/',
-      inline: true,
-      css: ['public/css/main.css']
-    }))
-    .pipe(gulp.dest('public'));
-});
+/*****************
+ * Move Files
+ *****************/
+  function move(cb) {
+    // Move Favicon
+    src([
+      srcRoot + '*.ico',
+      srcPaths.assets + 'favicon/*',
+    ], { allowEmpty: true })
+      .pipe(dest(buildRoot));
+    
+    // Move Fonts
+    src(srcPaths.assets + 'fonts/**/*')
+      .pipe(dest(buildPaths.fonts));
 
-// Generate & Inline Critical-path CSS
-gulp.task('video_critical', ['build_videos', 'views_critical'], function () {
-  return gulp.src(buildRoot + '**/**/*.html')
-    .pipe(critical({
-      base: buildRoot + '**/**/*.html',
-      inline: true,
-      css: ['public/css/main.css']
-    }))
-    .pipe(gulp.dest(buildRoot));
-});
+    cb();
+  }
 
-gulp.task('ship_critical', ['video_critical']);
+/*****************
+ * Images
+ *****************/
+  function images() {
+    return src(srcPaths.img + '**/**/*')
+      .pipe(gulpif(env === 'production', imagemin([
+        imagemin.gifsicle({
+          interlaced: true,
+          optimizationLevel: 3
+        }),
+        imagemin.jpegtran({
+          progressive: true
+        }),
+        imagemin.optipng({ optimizationLevel: 3 }),
+        imagemin.svgo({
+          plugins: [{
+            removeViewBox: true,
+            removeComments: true,
+            removeMetadata: true,
+            removeTitle: true,
+            removeDesc: true,
+            cleanupAttrs: true
+          }]
+        })], {
+        verbose: true
+      }), imagemin([
+        imagemin.gifsicle({ interlaced: true }),
+        imagemin.jpegtran({ progressive: true }),
+        imagemin.optipng({ optimizationLevel: 0 }),
+        imagemin.svgo({ plugins: [{ removeViewBox: true }] })
+      ])))
+      .pipe(dest(buildPaths.img))
+  }
+
+ /*****************
+ * Clean Build
+ *****************/
+  function cleanBuild() {
+    return src(buildRoot, {
+      allowEmpty: true
+    }).pipe(clean());  
+  }
+
+
+/*****************
+ * Watchers
+ *****************/
+  function watcher(cb) {
+    bs({
+      server: buildRoot,
+      files: [srcRoot + '**/**/**/**/*', buildRoot + '**/**/**/**/*'],
+    });
+
+    watch(srcRoot + '**/**/**/*.pug', views);
+    watch(srcPaths.css + '**/**/*.scss', styles);
+    watch(srcPaths.js + '**/**/*.js', scripts);
+    // watch(srcPaths.js + 'lib/**/*.js', ['jsLib']);
+    watch(srcPaths.assets + 'img/**/**', images);
+
+    cb();
+  }
+
+/*****************
+* Critic CSS
+*****************/
+  function critic() {
+    return src(buildRoot + '*.html')
+      .pipe(critical({
+        base: 'public/',
+        inline: true,
+        css: ['public/css/main.css']
+      }))
+      .pipe(dest('public'));
+  }
+
+/*****************
+ * Gulp Exports
+ *****************/
+exports.clean = cleanBuild;
+exports.views = views;
+exports.critic = critic;
+exports.dev = function(cb){
+  series(cleanBuild, parallel(views, styles, scripts, move, images), watcher)();
+  cb();
+}
+
+exports.build = function(cb){
+  series(cleanBuild, views, styles, scripts, move, critic, images)();
+  cb();
+}
+

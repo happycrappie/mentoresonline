@@ -3,7 +3,7 @@
 ** @param {DOMElement} element - DOM element to check for a class
 ** @param {string} className - class to be checked, e.g. 'active'
 */
-var hasClass = function (element, className) {
+function hasClass(element, className) {
   if (document.documentElement.classList) {
     hasClass = function (element, className) {
       return element.classList.contains(className);
@@ -25,7 +25,7 @@ var hasClass = function (element, className) {
 ** @param {DOMElement} element - DOM element to add a class to
 ** @param {string} className - only one class name, e.g. 'active'
 */
-var addClass = function (element, className) {
+function addClass(element, className) {
   if (document.documentElement.classList) {
     addClass = function (element, className) {
       element.classList.add(className);
@@ -48,7 +48,7 @@ var addClass = function (element, className) {
 ** @param {DOMElement} element - DOM element to remove a class from
 ** @param {string} className - only one class name, e.g. 'active'
 */
-var removeClass = (element, className) => {
+function removeClass(element, className) {
   if (document.documentElement.classList) {
     // New Browsers
     removeClass = (element, className) => {
@@ -72,7 +72,7 @@ var removeClass = (element, className) => {
 ** @param {DOMElement} element - DOM element to toggle a class from
 ** @param {string} className - only one class name, e.g. 'active'
 */
-var toggleClass = function (element, className) {
+function toggleClass(element, className) {
   if (document.documentElement.classList) {
     toggleClass = function (element, className) {
       return element.classList.toggle(className);

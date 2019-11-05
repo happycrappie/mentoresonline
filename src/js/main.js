@@ -10,7 +10,7 @@ if (document.querySelector('#series.page')) {
   var videos = document.querySelectorAll('.video-list');
 
   // Slice Categories to make it an array
-  var categoriesArray = [].slice.call(this.categories);
+  var categoriesArray = [].slice.call(categories);
 
   /**
    * Loop through Categories to add Event Listeners.
@@ -144,7 +144,7 @@ if (document.querySelector('#video.page')) {
  */
 if (document.querySelector('.video-card')) {
   var videoDescriptions = document.querySelectorAll('.video-card-info--description');
-  var videoDescriptionsArray = [].slice.call(this.videoDescriptions);
+  var videoDescriptionsArray = [].slice.call(videoDescriptions);
   
   domReady(function(e) {
     videoDescriptionsArray.forEach(function (video, index) {
