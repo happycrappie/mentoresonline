@@ -66,18 +66,19 @@ html
               //-       | Lorem ipsum de apto ip sumi dlo thi wisd lor amidp adapt ma fait yuwv lorem. Lorem ipsum de apto ip sumi dlo thi wisd lor amidp adapt ma fait yuwv lorem. Lorem ipsum de apto ip sumi dlo thi wisd lor amidp adapt ma fait yuwv lorem. 
 
           aside.video-info
-            each profile in page.video.profiles
-              .video-info-profile
-                figure.video-info-profile--pic
-                  img(src="/img/profile/profile-pic--"+profile.meta+".png", alt="")
-                h4.video-info-profile--author= profile.name
-                h5.video-info-profile--title= profile.job
-                p.video-info-profile--quote= profile.quote
-                nav.video-info-profile--social
-                  if profile.links
-                    each social in profile.links
-                      a(href=social.type.url + social.handle, title="Acessar o " + social.type.name + " de " + profile.name, target="_blank").video-info-profile--social-link 
-                        img(src="/img/icons/icon-share--" + social.type.meta + ".svg", alt=social.type.name)
+            if page.video.profiles
+              each profile in page.video.profiles
+                .video-info-profile
+                  figure.video-info-profile--pic
+                    img(src="/img/profile/profile-pic--"+profile.meta+".png", alt="")
+                  h4.video-info-profile--author= profile.name
+                  h5.video-info-profile--title= profile.job
+                  p.video-info-profile--quote= profile.quote
+                  nav.video-info-profile--social
+                    if profile.links
+                      each social in profile.links
+                        a(href=social.type.url + social.handle, title="Acessar o " + social.type.name + " de " + profile.name, target="_blank").video-info-profile--social-link 
+                          img(src="/img/icons/icon-share--" + social.type.meta + ".svg", alt=social.type.name)
 
     include ../sections/footer.pug  
 
