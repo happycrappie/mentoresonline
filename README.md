@@ -73,11 +73,20 @@ Toda vez que você salvar os arquivos, o pré-processador (Gulp) vai rodar para 
 ```
 src
   |- sass
-      |- Components
-      |- Sections
-      |- Templates
-      |- Typography
-      |- Views
+      |- components
+      |- sections
+      |- templates
+      |- typography
+      |- views
 ```
+
+|Nome|Descrição|
+|-------|------|
+|Components|São elementos reutilizáveis, podem ser singulares (como botões), ou complexos (como cards).|
+|Sections|São seções prontas do site, geralmente feitas para serem inclusas em diversas páginas.|
+|Templates|São páginas pré-prontas, com várias seções.|
+|Views|São estilos específicos de uma página|
+|Typography|Configurações de tipografia.|
+
 
 *Documentação em construção.*
